@@ -121,16 +121,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Application_window.cpp" />
+    <ClCompile Include="DataBaseViewer.cpp" />
+    <ClCompile Include="Wizard.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Application_window.h">
+    <ClInclude Include="DataBaseViewer.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="Variables.h" />
+    <ClInclude Include="Wizard.h">
       <FileType>CppForm</FileType>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Application_window.resx">
-      <DependentUpon>Application_window.h</DependentUpon>
+    <EmbeddedResource Include="DataBaseViewer.resx">
+      <DependentUpon>DataBaseViewer.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Wizard.resx">
+      <DependentUpon>Wizard.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
