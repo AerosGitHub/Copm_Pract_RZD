@@ -1,4 +1,6 @@
 #pragma once
+#include "Class_Train.h"
+#include <fstream>
 
 namespace CopmPractRZD {
 
@@ -23,22 +25,41 @@ namespace CopmPractRZD {
 			//TODO: Add the constructor code here
 			//
 
-			DataTable^ table = gcnew DataTable();
+			//String^ From;
+			//String^ DepartTo;
+			//Boolean Status; //0 is arriving; 1 is departing;
+			//Int32 DateFrom;
+			//Int32 DateDepartTo;
+			//Int32 AvailableSeats;
+			//String^ TypeOfTrain;
 
-			table->Columns->Add("asdf");
-			table->Columns->Add();
-			table->Columns->Add();
-			table->Columns->Add();
+			table->Columns->Add("From");
+			table->Columns->Add("DepartTo");
+			table->Columns->Add("Status");
+			table->Columns->Add("DateFrom");
+			table->Columns->Add("DateDepartTo");
+			table->Columns->Add("AvailableSeats");
+			table->Columns->Add("TypeOfTrain");
+
+
+			this->dataGridView1->DataSource = table;
 
 			for (size_t i = 0; i < 100; i++)
 			{
 				DataRow^ row = table->NewRow();
-				row["asdf"] = "asdf";
+				row["From"] = "asdf";
 				table->Rows->Add(row);
 			}
+		}
 
+		List<Train^>^ TrainsList = gcnew List<Train^>();
 
-			this->dataGridView1->DataSource = table;
+		DataTable^ table = gcnew DataTable();
+		void ClearData() {
+			//DataTable^ table = gcnew DataTable();
+			//this->dataGridView1->DataSource = table;
+
+			table->Clear();
 		}
 
 
@@ -55,6 +76,7 @@ namespace CopmPractRZD {
 		}
 
 	private: System::Windows::Forms::DataGridView^ dataGridView1;
+	private: System::Windows::Forms::Button^ button1;
 
 	protected:
 
@@ -76,24 +98,40 @@ namespace CopmPractRZD {
 		void InitializeComponent(void)
 		{
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
+			this->button1 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// dataGridView1
 			// 
 			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dataGridView1->Location = System::Drawing::Point(12, 143);
+			this->dataGridView1->Location = System::Drawing::Point(9, 116);
+			this->dataGridView1->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->dataGridView1->Name = L"dataGridView1";
 			this->dataGridView1->RowTemplate->Height = 24;
-			this->dataGridView1->Size = System::Drawing::Size(960, 606);
+			this->dataGridView1->Size = System::Drawing::Size(720, 492);
 			this->dataGridView1->TabIndex = 1;
+			this->dataGridView1->CellContentClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &DataBaseViewer::dataGridView1_CellContentClick);
+			this->dataGridView1->CellDoubleClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &DataBaseViewer::dataGridView1_CellDoubleClick);
+			// 
+			// button1
+			// 
+			this->button1->Location = System::Drawing::Point(549, 48);
+			this->button1->Name = L"button1";
+			this->button1->Size = System::Drawing::Size(75, 23);
+			this->button1->TabIndex = 2;
+			this->button1->Text = L"button1";
+			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &DataBaseViewer::button1_Click);
 			// 
 			// DataBaseViewer
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(8, 16);
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(984, 761);
+			this->ClientSize = System::Drawing::Size(738, 618);
+			this->Controls->Add(this->button1);
 			this->Controls->Add(this->dataGridView1);
+			this->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
 			this->Name = L"DataBaseViewer";
 			this->Text = L"DataBaseViewer";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
@@ -101,5 +139,12 @@ namespace CopmPractRZD {
 
 		}
 #pragma endregion
-	};
+	private: System::Void dataGridView1_CellContentClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
+	}
+	private: System::Void dataGridView1_CellDoubleClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
+	}
+	private: System::Void button1_Click(System::Object^ sender, System::EventArgs^ e) {
+		ClearData();
+	}
+};
 }

@@ -1,6 +1,7 @@
 #include "Wizard.h"
 #include "DataBaseViewer.h"
 #include "Variables.h"
+#include <fstream>
 
 using namespace System;
 using namespace System::Windows::Forms;
