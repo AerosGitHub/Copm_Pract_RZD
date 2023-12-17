@@ -11,6 +11,7 @@ namespace CopmPractRZD {
 	using namespace System::Data;
 	using namespace System::Drawing;
 	using namespace System::Collections::Generic;
+	using namespace System::IO;
 
 	/// <summary>
 	/// Summary for DataBaseViewer
@@ -25,32 +26,11 @@ namespace CopmPractRZD {
 			//TODO: Add the constructor code here
 			//
 
-			openFileDialog1->Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-			openFileDialog1->RestoreDirectory = true;
-			System::Windows::Forms::DialogResult Status_ShowDialog = openFileDialog1->ShowDialog();
-			System::IO::Stream^ FileStream = openFileDialog1->OpenFile();
-			String^ FileName = openFileDialog1->FileName;
-
-			table->Columns->Add("From");
-			table->Columns->Add("DepartTo");
-			table->Columns->Add("Status");
-			table->Columns->Add("DateFrom");
-			table->Columns->Add("DateDepartTo");
-			table->Columns->Add("AvailableSeats");
-			table->Columns->Add("TypeOfTrain");
-
-
-			this->dataGridView1->DataSource = table;
-
-			for (size_t i = 0; i < 100; i++)
-			{
-				DataRow^ row = table->NewRow();
-				row["From"] = FileName;
-				table->Rows->Add(row);
-			}
+			FillTable();
 		}
 
 		List<Train^>^ TrainsList = gcnew List<Train^>();
+
 	private: System::Windows::Forms::OpenFileDialog^ openFileDialog1;
 	public:
 
@@ -59,6 +39,67 @@ namespace CopmPractRZD {
 		DataTable^ table = gcnew DataTable();
 		void ClearData() {
 			table->Clear();
+		}
+
+		void FillTable() {
+
+			//Windows Dialog window to choose file (Explorer)
+
+			openFileDialog1->Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+			openFileDialog1->RestoreDirectory = true;
+			System::Windows::Forms::DialogResult Status_ShowDialog = openFileDialog1->ShowDialog();
+			System::IO::Stream^ FileStream = openFileDialog1->OpenFile();
+			String^ FileName = openFileDialog1->FileName;
+
+			StreamReader^ TxtFileStream = File::OpenText(FileName);
+
+
+			//Creating a list of classes objects and filling it
+
+			while (!TxtFileStream->EndOfStream) {
+
+				String^ Line = TxtFileStream->ReadLine();
+				array<String^>^ SplittedLine = Line->Split(' ');
+
+				String^ From = SplittedLine[0];
+				String^ DepartTo = SplittedLine[1];
+				Boolean Status = (Boolean)Convert::ToInt16(SplittedLine[2]);
+				String^ DateF = SplittedLine[3];
+				String^ DateD = SplittedLine[4];
+				Int32 Kupe = Convert::ToInt32(SplittedLine[5]);
+				Int32 Sleep = Convert::ToInt32(SplittedLine[6]);
+				Int32 Platscart = Convert::ToInt32(SplittedLine[7]);
+
+				TrainsList->Add(gcnew Train(From, DepartTo, Status, DateF, DateD, Kupe, Sleep, Platscart));
+			}
+
+			FileStream->Close();
+			TxtFileStream->Close();
+
+			table->Columns->Add("From");
+			table->Columns->Add("DepartTo");
+			table->Columns->Add("Status");
+			table->Columns->Add("DateFrom");
+			table->Columns->Add("DateDepartTo");
+			table->Columns->Add("AvailableSeats");
+			table->Columns->Add("SeatsKupe");
+			table->Columns->Add("SeatsSleep");
+			table->Columns->Add("SeatsPlatscart");
+
+
+			this->dataGridView1->DataSource = table;
+
+			for (int i = 0; i < this->TrainsList->Count; i++)
+			{
+				DataRow^ row = table->NewRow();
+				for (int j = 0; j < table->Columns->Count; j++)
+				{
+					String^ columnName = table->Columns[j]->Caption;
+					row[columnName] = TrainsList[i]->AllData[columnName];
+				}
+				table->Rows->Add(row);
+			}
+
 		}
 
 
