@@ -25,13 +25,11 @@ namespace CopmPractRZD {
 			//TODO: Add the constructor code here
 			//
 
-			//String^ From;
-			//String^ DepartTo;
-			//Boolean Status; //0 is arriving; 1 is departing;
-			//Int32 DateFrom;
-			//Int32 DateDepartTo;
-			//Int32 AvailableSeats;
-			//String^ TypeOfTrain;
+			openFileDialog1->Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
+			openFileDialog1->RestoreDirectory = true;
+			System::Windows::Forms::DialogResult Status_ShowDialog = openFileDialog1->ShowDialog();
+			System::IO::Stream^ FileStream = openFileDialog1->OpenFile();
+			String^ FileName = openFileDialog1->FileName;
 
 			table->Columns->Add("From");
 			table->Columns->Add("DepartTo");
@@ -47,18 +45,19 @@ namespace CopmPractRZD {
 			for (size_t i = 0; i < 100; i++)
 			{
 				DataRow^ row = table->NewRow();
-				row["From"] = "asdf";
+				row["From"] = FileName;
 				table->Rows->Add(row);
 			}
 		}
 
 		List<Train^>^ TrainsList = gcnew List<Train^>();
+	private: System::Windows::Forms::OpenFileDialog^ openFileDialog1;
+	public:
+
+	public:
 
 		DataTable^ table = gcnew DataTable();
 		void ClearData() {
-			//DataTable^ table = gcnew DataTable();
-			//this->dataGridView1->DataSource = table;
-
 			table->Clear();
 		}
 
@@ -99,6 +98,7 @@ namespace CopmPractRZD {
 		{
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
 			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -106,7 +106,7 @@ namespace CopmPractRZD {
 			// 
 			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->dataGridView1->Location = System::Drawing::Point(9, 116);
-			this->dataGridView1->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->dataGridView1->Margin = System::Windows::Forms::Padding(2);
 			this->dataGridView1->Name = L"dataGridView1";
 			this->dataGridView1->RowTemplate->Height = 24;
 			this->dataGridView1->Size = System::Drawing::Size(720, 492);
@@ -124,6 +124,10 @@ namespace CopmPractRZD {
 			this->button1->UseVisualStyleBackColor = true;
 			this->button1->Click += gcnew System::EventHandler(this, &DataBaseViewer::button1_Click);
 			// 
+			// openFileDialog1
+			// 
+			this->openFileDialog1->FileName = L"openFileDialog1";
+			// 
 			// DataBaseViewer
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -131,7 +135,7 @@ namespace CopmPractRZD {
 			this->ClientSize = System::Drawing::Size(738, 618);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->dataGridView1);
-			this->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->Margin = System::Windows::Forms::Padding(2);
 			this->Name = L"DataBaseViewer";
 			this->Text = L"DataBaseViewer";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
