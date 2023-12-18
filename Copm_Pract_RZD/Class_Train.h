@@ -10,7 +10,7 @@ public ref class Train {
 public:
 	String^ From;
 	String^ DepartTo;
-	Boolean Status; //false is arriving; true is departing;
+	Int32 Status; //false is arriving; true is departing;
 	DateTime DateFrom;
 	DateTime DateDepartTo;
 	Boolean AvailableSeats = false;
@@ -19,7 +19,7 @@ public:
 	Int32 SeatsPlatscart = 0;
 	Dictionary<String^, String^> AllData;
 
-	Train(String^ CityFrom, String^ CityTo, Boolean ArOrDep, String^ DateF, String^ DateD, Int32 Kupe, Int32 Sleep, Int32 Platscart) {
+	Train(String^ CityFrom, String^ CityTo, Int32 ArOrDep, String^ DateF, String^ DateD, Int32 Kupe, Int32 Sleep, Int32 Platscart) {
 		From = CityFrom;
 		DepartTo = CityTo;
 		Status = ArOrDep;
@@ -28,7 +28,7 @@ public:
 		SeatsKupe = Kupe;
 		SeatsSleep = Sleep;
 		SeatsPlatscart = Platscart;
-		SetStatus();
+		SetStatusOfAvailableSeats();
 
 		//Add keys and values in dictionary
 		AllData.Add("From", Convert::ToString(From));
@@ -43,8 +43,8 @@ public:
 	}
 
 private:
-	void SetStatus() {
-		if (SeatsKupe != 0 && SeatsSleep != 0 && SeatsPlatscart != 0)
+	void SetStatusOfAvailableSeats() {
+		if (SeatsKupe != 0 || SeatsSleep != 0 || SeatsPlatscart || 0)
 		{
 			AvailableSeats = true;
 		}
