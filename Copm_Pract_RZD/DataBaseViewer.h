@@ -43,9 +43,10 @@ namespace CopmPractRZD {
 
 	private: System::Windows::Forms::Label^ lb_dateDepart;
 	private: System::Windows::Forms::TextBox^ textBox_dateDepart;
+	private: System::Windows::Forms::Button^ btn_save;
 
 
-	private: System::Windows::Forms::Button^ btn_safe;
+
 
 	public:
 		List<Train^>^ TrainsList = gcnew List<Train^>();
@@ -58,6 +59,7 @@ namespace CopmPractRZD {
 	private: System::Windows::Forms::CheckBox^ checkBox_Platscart;
 	private: System::Windows::Forms::CheckBox^ checkBox2;
 	private: System::Windows::Forms::CheckBox^ checkBox3;
+	private: System::Windows::Forms::Button^ button1;
 
 	public:
 
@@ -187,12 +189,13 @@ private: System::Windows::Forms::Button^ btn_reload;
 			this->textBox_dateFrom = (gcnew System::Windows::Forms::TextBox());
 			this->lb_dateDepart = (gcnew System::Windows::Forms::Label());
 			this->textBox_dateDepart = (gcnew System::Windows::Forms::TextBox());
-			this->btn_safe = (gcnew System::Windows::Forms::Button());
+			this->btn_save = (gcnew System::Windows::Forms::Button());
 			this->lb_Status = (gcnew System::Windows::Forms::Label());
 			this->textBox_Status = (gcnew System::Windows::Forms::TextBox());
 			this->checkBox_Kupe = (gcnew System::Windows::Forms::CheckBox());
 			this->checkBox_Sleep = (gcnew System::Windows::Forms::CheckBox());
 			this->checkBox_Platscart = (gcnew System::Windows::Forms::CheckBox());
+			this->button1 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -212,9 +215,9 @@ private: System::Windows::Forms::Button^ btn_reload;
 			// 
 			// btn_reload
 			// 
-			this->btn_reload->Location = System::Drawing::Point(794, 91);
+			this->btn_reload->Location = System::Drawing::Point(794, 60);
 			this->btn_reload->Name = L"btn_reload";
-			this->btn_reload->Size = System::Drawing::Size(154, 23);
+			this->btn_reload->Size = System::Drawing::Size(154, 54);
 			this->btn_reload->TabIndex = 2;
 			this->btn_reload->Text = L"Reload";
 			this->btn_reload->UseVisualStyleBackColor = true;
@@ -226,9 +229,9 @@ private: System::Windows::Forms::Button^ btn_reload;
 			// 
 			// btn_openNewFile
 			// 
-			this->btn_openNewFile->Location = System::Drawing::Point(794, 47);
+			this->btn_openNewFile->Location = System::Drawing::Point(634, 4);
 			this->btn_openNewFile->Name = L"btn_openNewFile";
-			this->btn_openNewFile->Size = System::Drawing::Size(154, 23);
+			this->btn_openNewFile->Size = System::Drawing::Size(154, 50);
 			this->btn_openNewFile->TabIndex = 3;
 			this->btn_openNewFile->Text = L"Open";
 			this->btn_openNewFile->UseVisualStyleBackColor = true;
@@ -302,15 +305,15 @@ private: System::Windows::Forms::Button^ btn_reload;
 			this->textBox_dateDepart->TabIndex = 12;
 			this->textBox_dateDepart->TextChanged += gcnew System::EventHandler(this, &DataBaseViewer::textBox_dateDepart_TextChanged);
 			// 
-			// btn_safe
+			// btn_save
 			// 
-			this->btn_safe->Location = System::Drawing::Point(794, 4);
-			this->btn_safe->Name = L"btn_safe";
-			this->btn_safe->Size = System::Drawing::Size(154, 23);
-			this->btn_safe->TabIndex = 13;
-			this->btn_safe->Text = L"Safe";
-			this->btn_safe->UseVisualStyleBackColor = true;
-			this->btn_safe->Click += gcnew System::EventHandler(this, &DataBaseViewer::btn_safe_Click);
+			this->btn_save->Location = System::Drawing::Point(794, 4);
+			this->btn_save->Name = L"btn_save";
+			this->btn_save->Size = System::Drawing::Size(154, 50);
+			this->btn_save->TabIndex = 13;
+			this->btn_save->Text = L"Save";
+			this->btn_save->UseVisualStyleBackColor = true;
+			this->btn_save->Click += gcnew System::EventHandler(this, &DataBaseViewer::btn_save_Click);
 			// 
 			// lb_Status
 			// 
@@ -360,17 +363,27 @@ private: System::Windows::Forms::Button^ btn_reload;
 			this->checkBox_Platscart->UseVisualStyleBackColor = true;
 			this->checkBox_Platscart->CheckedChanged += gcnew System::EventHandler(this, &DataBaseViewer::checkBox_Platscart_CheckedChanged);
 			// 
+			// button1
+			// 
+			this->button1->Location = System::Drawing::Point(634, 61);
+			this->button1->Name = L"button1";
+			this->button1->Size = System::Drawing::Size(154, 50);
+			this->button1->TabIndex = 19;
+			this->button1->Text = L"Search";
+			this->button1->UseVisualStyleBackColor = true;
+			// 
 			// DataBaseViewer
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(960, 633);
+			this->Controls->Add(this->button1);
 			this->Controls->Add(this->checkBox_Platscart);
 			this->Controls->Add(this->checkBox_Sleep);
 			this->Controls->Add(this->checkBox_Kupe);
 			this->Controls->Add(this->textBox_Status);
 			this->Controls->Add(this->lb_Status);
-			this->Controls->Add(this->btn_safe);
+			this->Controls->Add(this->btn_save);
 			this->Controls->Add(this->textBox_dateDepart);
 			this->Controls->Add(this->lb_dateDepart);
 			this->Controls->Add(this->textBox_dateFrom);
@@ -409,7 +422,7 @@ private: System::Windows::Forms::Button^ btn_reload;
 		FileName = "";
 		FillTable();
 	}
-	private: System::Void btn_safe_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void btn_save_Click(System::Object^ sender, System::EventArgs^ e) {
 
 		//List<Train^>^ Worker = gcnew List<Train^>();
 
@@ -447,11 +460,14 @@ private: System::Windows::Forms::Button^ btn_reload;
 
 	}
 	private: System::Void textBox_cityFrom_TextChanged(System::Object^ sender, System::EventArgs^ e) {
-		DataTable^ helpTable = table->Copy();
-		for (int i = 0; i < table->Rows->Count; i++)
-		{
-
-		}
+		//DataTable^ helpTable = table->Copy();
+		//String^ ChangedText = this->textBox_cityFrom->Text;
+		//for (int i = 0; i < table->Rows->Count; i++)
+		//{
+		//	if ((String^)table->Rows[i]->ItemArray[0] != ChangedText) {
+		//		table->Rows.
+		//	}
+		//}
 	}
 	private: System::Void checkBox_Platscart_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
 	}
