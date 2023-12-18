@@ -31,7 +31,7 @@ namespace CopmPractRZD {
 
 	private: System::Windows::Forms::OpenFileDialog^ openFileDialog1;
 	private: System::Windows::Forms::Button^ btn_openNewFile;
-	private: System::Windows::Forms::Button^ btn_search;
+
 	private: System::Windows::Forms::TextBox^ textBox_cityFrom;
 	private: System::Windows::Forms::Label^ lb_cityFrom;
 	private: System::Windows::Forms::Label^ lb_cityDepartTo;
@@ -120,20 +120,20 @@ namespace CopmPractRZD {
 
 		static array<String^>^ ColumnsNames = gcnew array<String^>(9) {
 			"From",
-			"DepartTo",
-			"Status",
-			"DateFrom",
-			"DateDepartTo",
-			"AvailableSeats",
-			"SeatsKupe",
-			"SeatsSleep",
-			"SeatsPlatscart"
+				"DepartTo",
+				"Status",
+				"DateFrom",
+				"DateDepartTo",
+				"AvailableSeats",
+				"SeatsKupe",
+				"SeatsSleep",
+				"SeatsPlatscart"
 		};
 
 		void AddColumns() {
 
 			if (table->Columns->Count == 0) {
-				for each (String^ ColumnName in ColumnsNames)
+				for each (String ^ ColumnName in ColumnsNames)
 				{
 					table->Columns->Add(ColumnName);
 				}
@@ -152,7 +152,8 @@ namespace CopmPractRZD {
 		}
 
 	private: System::Windows::Forms::DataGridView^ dataGridView1;
-	private: System::Windows::Forms::Button^ btn_clear;
+private: System::Windows::Forms::Button^ btn_reload;
+
 
 
 	protected:
@@ -175,10 +176,9 @@ namespace CopmPractRZD {
 		void InitializeComponent(void)
 		{
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
-			this->btn_clear = (gcnew System::Windows::Forms::Button());
+			this->btn_reload = (gcnew System::Windows::Forms::Button());
 			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
 			this->btn_openNewFile = (gcnew System::Windows::Forms::Button());
-			this->btn_search = (gcnew System::Windows::Forms::Button());
 			this->textBox_cityFrom = (gcnew System::Windows::Forms::TextBox());
 			this->lb_cityFrom = (gcnew System::Windows::Forms::Label());
 			this->lb_cityDepartTo = (gcnew System::Windows::Forms::Label());
@@ -210,15 +210,15 @@ namespace CopmPractRZD {
 			this->dataGridView1->CellDoubleClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &DataBaseViewer::dataGridView1_CellDoubleClick);
 			this->dataGridView1->CellEndEdit += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &DataBaseViewer::dataGridView1_CellEndEdit);
 			// 
-			// btn_clear
+			// btn_reload
 			// 
-			this->btn_clear->Location = System::Drawing::Point(794, 91);
-			this->btn_clear->Name = L"btn_clear";
-			this->btn_clear->Size = System::Drawing::Size(154, 23);
-			this->btn_clear->TabIndex = 2;
-			this->btn_clear->Text = L"Clear";
-			this->btn_clear->UseVisualStyleBackColor = true;
-			this->btn_clear->Click += gcnew System::EventHandler(this, &DataBaseViewer::btn_clear_Click);
+			this->btn_reload->Location = System::Drawing::Point(794, 91);
+			this->btn_reload->Name = L"btn_reload";
+			this->btn_reload->Size = System::Drawing::Size(154, 23);
+			this->btn_reload->TabIndex = 2;
+			this->btn_reload->Text = L"Reload";
+			this->btn_reload->UseVisualStyleBackColor = true;
+			this->btn_reload->Click += gcnew System::EventHandler(this, &DataBaseViewer::btn_reload_Click);
 			// 
 			// openFileDialog1
 			// 
@@ -226,22 +226,13 @@ namespace CopmPractRZD {
 			// 
 			// btn_openNewFile
 			// 
-			this->btn_openNewFile->Location = System::Drawing::Point(794, 62);
+			this->btn_openNewFile->Location = System::Drawing::Point(794, 47);
 			this->btn_openNewFile->Name = L"btn_openNewFile";
 			this->btn_openNewFile->Size = System::Drawing::Size(154, 23);
 			this->btn_openNewFile->TabIndex = 3;
 			this->btn_openNewFile->Text = L"Open";
 			this->btn_openNewFile->UseVisualStyleBackColor = true;
 			this->btn_openNewFile->Click += gcnew System::EventHandler(this, &DataBaseViewer::btn_openNewFile_Click);
-			// 
-			// btn_search
-			// 
-			this->btn_search->Location = System::Drawing::Point(794, 33);
-			this->btn_search->Name = L"btn_search";
-			this->btn_search->Size = System::Drawing::Size(154, 23);
-			this->btn_search->TabIndex = 4;
-			this->btn_search->Text = L"Search";
-			this->btn_search->UseVisualStyleBackColor = true;
 			// 
 			// textBox_cityFrom
 			// 
@@ -275,6 +266,7 @@ namespace CopmPractRZD {
 			this->textBox_cityDepartTo->Name = L"textBox_cityDepartTo";
 			this->textBox_cityDepartTo->Size = System::Drawing::Size(99, 20);
 			this->textBox_cityDepartTo->TabIndex = 8;
+			this->textBox_cityDepartTo->TextChanged += gcnew System::EventHandler(this, &DataBaseViewer::textBox_cityDepartTo_TextChanged);
 			// 
 			// lb_dateFrom
 			// 
@@ -291,6 +283,7 @@ namespace CopmPractRZD {
 			this->textBox_dateFrom->Name = L"textBox_dateFrom";
 			this->textBox_dateFrom->Size = System::Drawing::Size(98, 20);
 			this->textBox_dateFrom->TabIndex = 10;
+			this->textBox_dateFrom->TextChanged += gcnew System::EventHandler(this, &DataBaseViewer::textBox_dateFrom_TextChanged);
 			// 
 			// lb_dateDepart
 			// 
@@ -307,6 +300,7 @@ namespace CopmPractRZD {
 			this->textBox_dateDepart->Name = L"textBox_dateDepart";
 			this->textBox_dateDepart->Size = System::Drawing::Size(82, 20);
 			this->textBox_dateDepart->TabIndex = 12;
+			this->textBox_dateDepart->TextChanged += gcnew System::EventHandler(this, &DataBaseViewer::textBox_dateDepart_TextChanged);
 			// 
 			// btn_safe
 			// 
@@ -333,6 +327,7 @@ namespace CopmPractRZD {
 			this->textBox_Status->Name = L"textBox_Status";
 			this->textBox_Status->Size = System::Drawing::Size(151, 20);
 			this->textBox_Status->TabIndex = 15;
+			this->textBox_Status->TextChanged += gcnew System::EventHandler(this, &DataBaseViewer::textBox_Status_TextChanged);
 			// 
 			// checkBox_Kupe
 			// 
@@ -384,9 +379,8 @@ namespace CopmPractRZD {
 			this->Controls->Add(this->lb_cityDepartTo);
 			this->Controls->Add(this->lb_cityFrom);
 			this->Controls->Add(this->textBox_cityFrom);
-			this->Controls->Add(this->btn_search);
 			this->Controls->Add(this->btn_openNewFile);
-			this->Controls->Add(this->btn_clear);
+			this->Controls->Add(this->btn_reload);
 			this->Controls->Add(this->dataGridView1);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
 			this->Margin = System::Windows::Forms::Padding(2);
@@ -404,8 +398,10 @@ namespace CopmPractRZD {
 	}
 	private: System::Void dataGridView1_CellDoubleClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
 	}
-	private: System::Void btn_clear_Click(System::Object^ sender, System::EventArgs^ e) {
+	private: System::Void btn_reload_Click(System::Object^ sender, System::EventArgs^ e) {
+		TrainsList->Clear();
 		table->Clear();
+		FillTable();
 	}
 	private: System::Void btn_openNewFile_Click(System::Object^ sender, System::EventArgs^ e) {
 		table->Clear();
@@ -451,23 +447,39 @@ namespace CopmPractRZD {
 
 	}
 	private: System::Void textBox_cityFrom_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+		DataTable^ helpTable = table->Copy();
+		for (int i = 0; i < table->Rows->Count; i++)
+		{
+
+		}
 	}
 	private: System::Void checkBox_Platscart_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void dataGridView1_CellEndEdit(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
 
 		if (e->ColumnIndex == 2) {
-			if (true) {
-				int a = 10;
+			String^ TryedRow = (String^)table->Rows[e->RowIndex]->ItemArray[e->ColumnIndex];
+			if (TryedRow != "1" && TryedRow != "0") {
+				MessageBox::Show(
+					String::Format("[{0}] isn't a valid status.\nEnter a new valid status (0/1).\n[{0}] явялется неверным форматом ввода статуса.\nНапишите статус првильно (0/1).", TryedRow),
+					"ERROR COLUMN: STATUS",
+					MessageBoxButtons::OK,
+					MessageBoxIcon::Error
+				);
 			}
 		}
 
 		if (e->ColumnIndex == 3 || e->ColumnIndex == 4) {
 			DataGridView^ a = (DataGridView^)sender;
-			String^ b = (String^)table->Rows[e->RowIndex]->ItemArray[e->ColumnIndex];
+			String^ TryedRow = (String^)table->Rows[e->RowIndex]->ItemArray[e->ColumnIndex];
 			DateTime dummi;
-			if (!DateTime::TryParse(b, dummi)) {
-				MessageBox::Show("Entered date value isn't valid.\nEnter a new valid date.\nДата была написана неверно.\nНапишите дату правильно.", "ERROR", MessageBoxButtons::OK, MessageBoxIcon::Error);
+			if (!DateTime::TryParse(TryedRow, dummi)) {
+				MessageBox::Show(
+					String::Format("Entered date value [{0}] isn't valid.\nEnter a new valid date.\nВведенная дата [{0}] явялется неверной.\nНапишите дату правильно.", TryedRow),
+					"ERROR COLUMN: DateFrom/DateDepartTo",
+					MessageBoxButtons::OK,
+					MessageBoxIcon::Error
+				);
 			}
 		}
 
@@ -477,5 +489,13 @@ namespace CopmPractRZD {
 			e->Cancel = true;
 		}
 	}
-};
+	private: System::Void textBox_cityDepartTo_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+	}
+	private: System::Void textBox_dateFrom_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+	}
+	private: System::Void textBox_dateDepart_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+	}
+	private: System::Void textBox_Status_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+	}
+	};
 }
