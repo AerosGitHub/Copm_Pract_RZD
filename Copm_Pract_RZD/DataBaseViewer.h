@@ -76,10 +76,14 @@ namespace CopmPractRZD {
 
 				openFileDialog1->Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
 				openFileDialog1->RestoreDirectory = true;
-				System::Windows::Forms::DialogResult Status_ShowDialog = openFileDialog1->ShowDialog();
-				System::IO::Stream^ myFileStream = openFileDialog1->OpenFile();
-
-				FileName = openFileDialog1->FileName;
+				System::IO::Stream^ myFileStream;
+				if (openFileDialog1->ShowDialog() != System::Windows::Forms::DialogResult::Cancel) {
+					myFileStream = openFileDialog1->OpenFile();
+					FileName = openFileDialog1->FileName;
+				}
+				else {
+					this->Close();
+				}
 			}
 
 			StreamReader^ TxtFileStream = File::OpenText(FileName);
@@ -451,38 +455,64 @@ namespace CopmPractRZD {
 
 		//List<Train^>^ Worker = gcnew List<Train^>();
 
-		FileStream^ myFileStream = File::Create(FileName);
-		StreamWriter^ TxtFileStream = gcnew StreamWriter(myFileStream);
+		Int32 Cheack = 0;
 
-		for (int i = 0; i < table->Rows->Count; i++) {
+		try
+		{
+			for (int i = 0; i < table->Rows->Count; i++) {
 
-			array<Object^>^ row = table->Rows[i]->ItemArray;
+				array<Object^>^ row = table->Rows[i]->ItemArray;
 
-			String^ From = (String^)row[0];
-			String^ DepartTo = (String^)row[1];
-			Int32 Status = Convert::ToInt32((String^)row[2]);
-			String^ DateF = (String^)row[3];
-			String^ DateD = (String^)row[4];
-			Int32 Kupe = Convert::ToInt32((String^)row[6]);
-			Int32 Sleep = Convert::ToInt32((String^)row[7]);
-			Int32 Platscart = Convert::ToInt32((String^)row[8]);
-
-			TxtFileStream->WriteLine(String::Format("{0} {1} {2} {3} {4} {5} {6} {7}", From, DepartTo, Status, DateF, DateD, Kupe, Sleep, Platscart));
-
-			//Worker->Add(gcnew Train(From, DepartTo, Status, DateF, DateD, Kupe, Sleep, Platscart));
-
+				String^ From = (String^)row[0];
+				String^ DepartTo = (String^)row[1];
+				Int32 Status = Convert::ToInt32((String^)row[2]);
+				String^ DateF = (String^)row[3];
+				String^ DateD = (String^)row[4];
+				Int32 Kupe = Convert::ToInt32((String^)row[6]);
+				Int32 Sleep = Convert::ToInt32((String^)row[7]);
+				Int32 Platscart = Convert::ToInt32((String^)row[8]);
+			}
+			Cheack = 1;
+		}
+		catch (System::InvalidCastException^ e)
+		{
+			MessageBox::Show("You have a row with null cell.\nУ вас есть строка с пустой клеткой.", "ERROR", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
 
-		TxtFileStream->Close();
-		myFileStream->Close();
+		if (Cheack == 1) {
 
-		TrainsList->Clear();
-		table->Clear();
-		FillTable();
+			FileStream^ myFileStream = File::Create(FileName);
+			StreamWriter^ TxtFileStream = gcnew StreamWriter(myFileStream);
 
-		//FileStream^ myFileStream = File::Create(FileName);
-		//StreamWriter^ TxtFileStream = gcnew StreamWriter(myFileStream);
+			for (int i = 0; i < table->Rows->Count; i++) {
 
+				array<Object^>^ row = table->Rows[i]->ItemArray;
+
+				String^ From = (String^)row[0];
+				String^ DepartTo = (String^)row[1];
+				Int32 Status = Convert::ToInt32((String^)row[2]);
+				String^ DateF = (String^)row[3];
+				String^ DateD = (String^)row[4];
+				Int32 Kupe = Convert::ToInt32((String^)row[6]);
+				Int32 Sleep = Convert::ToInt32((String^)row[7]);
+				Int32 Platscart = Convert::ToInt32((String^)row[8]);
+
+				TxtFileStream->WriteLine(String::Format("{0} {1} {2} {3} {4} {5} {6} {7}", From, DepartTo, Status, DateF, DateD, Kupe, Sleep, Platscart));
+
+				//Worker->Add(gcnew Train(From, DepartTo, Status, DateF, DateD, Kupe, Sleep, Platscart));
+
+			}
+
+			TxtFileStream->Close();
+			myFileStream->Close();
+
+			TrainsList->Clear();
+			table->Clear();
+			FillTable();
+
+			//FileStream^ myFileStream = File::Create(FileName);
+			//StreamWriter^ TxtFileStream = gcnew StreamWriter(myFileStream);
+		}
 	}
 	private: System::Void textBox_cityFrom_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 

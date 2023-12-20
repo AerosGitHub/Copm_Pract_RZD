@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Variables.h"
+#include "DataBaseViewer.h"
 
 namespace CopmPractRZD {
 
@@ -140,6 +141,7 @@ namespace CopmPractRZD {
 			this->Name = L"Wizard";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Wizard";
+			this->Load += gcnew System::EventHandler(this, &Wizard::Wizard_Load);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -149,6 +151,7 @@ namespace CopmPractRZD {
 
 		if (this->textBox_login->Text == "admin" && this->textBox_password->Text == "admin") {
 			cheacker = 1;
+			MessageBox::Show("You need to have a txt file.\nIf you don't have it, just create it.\nУ вас должен быть txt файл.\nЕсли у вас его нет, то просто создайте его.", "Warning", MessageBoxButtons::OK, MessageBoxIcon::Information);
 			this->Close();
 		}
 		else {
@@ -156,6 +159,9 @@ namespace CopmPractRZD {
 		}
 	}
 	private: System::Void label1_Click(System::Object^ sender, System::EventArgs^ e) {
+	}
+	private: System::Void Wizard_Load(System::Object^ sender, System::EventArgs^ e) {
+		int a = 10;
 	}
 };
 }
