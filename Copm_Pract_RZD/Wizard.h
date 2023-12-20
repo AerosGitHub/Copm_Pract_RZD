@@ -70,7 +70,8 @@ namespace CopmPractRZD {
 			// 
 			this->label1->AutoSize = true;
 			this->label1->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Arial", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(204)));
+			this->label1->Font = (gcnew System::Drawing::Font(L"Arial", 20.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
 			this->label1->Location = System::Drawing::Point(60, 78);
 			this->label1->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->label1->Name = L"label1";
@@ -78,11 +79,12 @@ namespace CopmPractRZD {
 			this->label1->TabIndex = 0;
 			this->label1->Text = L"RZD Train Manage System";
 			this->label1->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
+			this->label1->Click += gcnew System::EventHandler(this, &Wizard::label1_Click);
 			// 
 			// btn_open
 			// 
 			this->btn_open->Location = System::Drawing::Point(171, 266);
-			this->btn_open->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->btn_open->Margin = System::Windows::Forms::Padding(2);
 			this->btn_open->Name = L"btn_open";
 			this->btn_open->Size = System::Drawing::Size(100, 41);
 			this->btn_open->TabIndex = 2;
@@ -134,7 +136,7 @@ namespace CopmPractRZD {
 			this->Controls->Add(this->btn_open);
 			this->Controls->Add(this->label1);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
-			this->Margin = System::Windows::Forms::Padding(2, 2, 2, 2);
+			this->Margin = System::Windows::Forms::Padding(2);
 			this->Name = L"Wizard";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Wizard";
@@ -153,5 +155,7 @@ namespace CopmPractRZD {
 			MessageBox::Show("Login and/or password isn't right.\nPlease write right login and password\nЛогин и/или пароль неверны.\nПожалуйста, введите правильный логин и пароль.", "ERROR", MessageBoxButtons::OK, MessageBoxIcon::Error);
 		}
 	}
-	};
+	private: System::Void label1_Click(System::Object^ sender, System::EventArgs^ e) {
+	}
+};
 }

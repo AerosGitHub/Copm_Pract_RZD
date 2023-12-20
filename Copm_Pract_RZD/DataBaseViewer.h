@@ -59,7 +59,9 @@ namespace CopmPractRZD {
 	private: System::Windows::Forms::CheckBox^ checkBox_Platscart;
 	private: System::Windows::Forms::CheckBox^ checkBox2;
 	private: System::Windows::Forms::CheckBox^ checkBox3;
-	private: System::Windows::Forms::Button^ button1;
+	private: System::Windows::Forms::Button^ btn_search;
+	private: System::Windows::Forms::Button^ btn_addRow;
+
 
 	public:
 
@@ -154,7 +156,7 @@ namespace CopmPractRZD {
 		}
 
 	private: System::Windows::Forms::DataGridView^ dataGridView1;
-private: System::Windows::Forms::Button^ btn_reload;
+	private: System::Windows::Forms::Button^ btn_reload;
 
 
 
@@ -195,12 +197,14 @@ private: System::Windows::Forms::Button^ btn_reload;
 			this->checkBox_Kupe = (gcnew System::Windows::Forms::CheckBox());
 			this->checkBox_Sleep = (gcnew System::Windows::Forms::CheckBox());
 			this->checkBox_Platscart = (gcnew System::Windows::Forms::CheckBox());
-			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->btn_search = (gcnew System::Windows::Forms::Button());
+			this->btn_addRow = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// dataGridView1
 			// 
+			this->dataGridView1->AllowUserToAddRows = false;
 			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->dataGridView1->Location = System::Drawing::Point(9, 116);
 			this->dataGridView1->Margin = System::Windows::Forms::Padding(2);
@@ -219,7 +223,7 @@ private: System::Windows::Forms::Button^ btn_reload;
 			this->btn_reload->Name = L"btn_reload";
 			this->btn_reload->Size = System::Drawing::Size(154, 54);
 			this->btn_reload->TabIndex = 2;
-			this->btn_reload->Text = L"Reload";
+			this->btn_reload->Text = L"Перезагрузить таблицу";
 			this->btn_reload->UseVisualStyleBackColor = true;
 			this->btn_reload->Click += gcnew System::EventHandler(this, &DataBaseViewer::btn_reload_Click);
 			// 
@@ -233,7 +237,7 @@ private: System::Windows::Forms::Button^ btn_reload;
 			this->btn_openNewFile->Name = L"btn_openNewFile";
 			this->btn_openNewFile->Size = System::Drawing::Size(154, 50);
 			this->btn_openNewFile->TabIndex = 3;
-			this->btn_openNewFile->Text = L"Open";
+			this->btn_openNewFile->Text = L"Открыть файл";
 			this->btn_openNewFile->UseVisualStyleBackColor = true;
 			this->btn_openNewFile->Click += gcnew System::EventHandler(this, &DataBaseViewer::btn_openNewFile_Click);
 			// 
@@ -243,7 +247,7 @@ private: System::Windows::Forms::Button^ btn_reload;
 			this->textBox_cityFrom->Name = L"textBox_cityFrom";
 			this->textBox_cityFrom->Size = System::Drawing::Size(102, 20);
 			this->textBox_cityFrom->TabIndex = 5;
-			this->textBox_cityFrom->TextChanged += gcnew System::EventHandler(this, &DataBaseViewer::textBox_cityFrom_TextChanged);
+			this->textBox_cityFrom->Leave += gcnew System::EventHandler(this, &DataBaseViewer::textBox_cityFrom_TextChanged);
 			// 
 			// lb_cityFrom
 			// 
@@ -269,7 +273,7 @@ private: System::Windows::Forms::Button^ btn_reload;
 			this->textBox_cityDepartTo->Name = L"textBox_cityDepartTo";
 			this->textBox_cityDepartTo->Size = System::Drawing::Size(99, 20);
 			this->textBox_cityDepartTo->TabIndex = 8;
-			this->textBox_cityDepartTo->TextChanged += gcnew System::EventHandler(this, &DataBaseViewer::textBox_cityDepartTo_TextChanged);
+			this->textBox_cityDepartTo->Leave += gcnew System::EventHandler(this, &DataBaseViewer::textBox_cityDepartTo_TextChanged);
 			// 
 			// lb_dateFrom
 			// 
@@ -286,7 +290,7 @@ private: System::Windows::Forms::Button^ btn_reload;
 			this->textBox_dateFrom->Name = L"textBox_dateFrom";
 			this->textBox_dateFrom->Size = System::Drawing::Size(98, 20);
 			this->textBox_dateFrom->TabIndex = 10;
-			this->textBox_dateFrom->TextChanged += gcnew System::EventHandler(this, &DataBaseViewer::textBox_dateFrom_TextChanged);
+			this->textBox_dateFrom->Leave += gcnew System::EventHandler(this, &DataBaseViewer::textBox_dateFrom_TextChanged);
 			// 
 			// lb_dateDepart
 			// 
@@ -303,7 +307,7 @@ private: System::Windows::Forms::Button^ btn_reload;
 			this->textBox_dateDepart->Name = L"textBox_dateDepart";
 			this->textBox_dateDepart->Size = System::Drawing::Size(82, 20);
 			this->textBox_dateDepart->TabIndex = 12;
-			this->textBox_dateDepart->TextChanged += gcnew System::EventHandler(this, &DataBaseViewer::textBox_dateDepart_TextChanged);
+			this->textBox_dateDepart->Leave += gcnew System::EventHandler(this, &DataBaseViewer::textBox_dateDepart_TextChanged);
 			// 
 			// btn_save
 			// 
@@ -311,7 +315,7 @@ private: System::Windows::Forms::Button^ btn_reload;
 			this->btn_save->Name = L"btn_save";
 			this->btn_save->Size = System::Drawing::Size(154, 50);
 			this->btn_save->TabIndex = 13;
-			this->btn_save->Text = L"Save";
+			this->btn_save->Text = L"Сохранить";
 			this->btn_save->UseVisualStyleBackColor = true;
 			this->btn_save->Click += gcnew System::EventHandler(this, &DataBaseViewer::btn_save_Click);
 			// 
@@ -330,54 +334,75 @@ private: System::Windows::Forms::Button^ btn_reload;
 			this->textBox_Status->Name = L"textBox_Status";
 			this->textBox_Status->Size = System::Drawing::Size(151, 20);
 			this->textBox_Status->TabIndex = 15;
-			this->textBox_Status->TextChanged += gcnew System::EventHandler(this, &DataBaseViewer::textBox_Status_TextChanged);
+			this->textBox_Status->Leave += gcnew System::EventHandler(this, &DataBaseViewer::textBox_Status_TextChanged);
 			// 
 			// checkBox_Kupe
 			// 
 			this->checkBox_Kupe->AutoSize = true;
-			this->checkBox_Kupe->Location = System::Drawing::Point(15, 66);
+			this->checkBox_Kupe->BackColor = System::Drawing::SystemColors::Control;
+			this->checkBox_Kupe->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->checkBox_Kupe->Location = System::Drawing::Point(126, 67);
 			this->checkBox_Kupe->Name = L"checkBox_Kupe";
-			this->checkBox_Kupe->Size = System::Drawing::Size(50, 17);
+			this->checkBox_Kupe->Size = System::Drawing::Size(88, 33);
 			this->checkBox_Kupe->TabIndex = 16;
 			this->checkBox_Kupe->Text = L"Купе";
-			this->checkBox_Kupe->UseVisualStyleBackColor = true;
+			this->checkBox_Kupe->UseVisualStyleBackColor = false;
+			this->checkBox_Kupe->CheckedChanged += gcnew System::EventHandler(this, &DataBaseViewer::checkBox_Kupe_CheckedChanged);
 			// 
 			// checkBox_Sleep
 			// 
 			this->checkBox_Sleep->AutoSize = true;
-			this->checkBox_Sleep->Location = System::Drawing::Point(71, 66);
+			this->checkBox_Sleep->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->checkBox_Sleep->Location = System::Drawing::Point(220, 67);
 			this->checkBox_Sleep->Name = L"checkBox_Sleep";
-			this->checkBox_Sleep->Size = System::Drawing::Size(109, 17);
+			this->checkBox_Sleep->Size = System::Drawing::Size(224, 33);
 			this->checkBox_Sleep->TabIndex = 17;
 			this->checkBox_Sleep->Text = L"Спальный вагон";
 			this->checkBox_Sleep->UseVisualStyleBackColor = true;
+			this->checkBox_Sleep->CheckedChanged += gcnew System::EventHandler(this, &DataBaseViewer::checkBox_Sleep_CheckedChanged);
 			// 
 			// checkBox_Platscart
 			// 
 			this->checkBox_Platscart->AutoSize = true;
-			this->checkBox_Platscart->Location = System::Drawing::Point(186, 66);
+			this->checkBox_Platscart->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 18, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->checkBox_Platscart->Location = System::Drawing::Point(440, 67);
 			this->checkBox_Platscart->Name = L"checkBox_Platscart";
-			this->checkBox_Platscart->Size = System::Drawing::Size(75, 17);
+			this->checkBox_Platscart->Size = System::Drawing::Size(143, 33);
 			this->checkBox_Platscart->TabIndex = 18;
 			this->checkBox_Platscart->Text = L"Плацкарт";
 			this->checkBox_Platscart->UseVisualStyleBackColor = true;
 			this->checkBox_Platscart->CheckedChanged += gcnew System::EventHandler(this, &DataBaseViewer::checkBox_Platscart_CheckedChanged);
 			// 
-			// button1
+			// btn_search
 			// 
-			this->button1->Location = System::Drawing::Point(634, 61);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(154, 50);
-			this->button1->TabIndex = 19;
-			this->button1->Text = L"Search";
-			this->button1->UseVisualStyleBackColor = true;
+			this->btn_search->Location = System::Drawing::Point(634, 61);
+			this->btn_search->Name = L"btn_search";
+			this->btn_search->Size = System::Drawing::Size(154, 50);
+			this->btn_search->TabIndex = 19;
+			this->btn_search->Text = L"Поиск";
+			this->btn_search->UseVisualStyleBackColor = true;
+			this->btn_search->Click += gcnew System::EventHandler(this, &DataBaseViewer::btn_search_Click);
+			// 
+			// btn_addRow
+			// 
+			this->btn_addRow->Location = System::Drawing::Point(15, 61);
+			this->btn_addRow->Name = L"btn_addRow";
+			this->btn_addRow->Size = System::Drawing::Size(102, 50);
+			this->btn_addRow->TabIndex = 20;
+			this->btn_addRow->Text = L"Добавить строку";
+			this->btn_addRow->UseVisualStyleBackColor = true;
+			this->btn_addRow->Click += gcnew System::EventHandler(this, &DataBaseViewer::btn_addRow_Click);
 			// 
 			// DataBaseViewer
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(960, 633);
-			this->Controls->Add(this->button1);
+			this->Controls->Add(this->btn_addRow);
+			this->Controls->Add(this->btn_search);
 			this->Controls->Add(this->checkBox_Platscart);
 			this->Controls->Add(this->checkBox_Sleep);
 			this->Controls->Add(this->checkBox_Kupe);
@@ -399,7 +424,7 @@ private: System::Windows::Forms::Button^ btn_reload;
 			this->Margin = System::Windows::Forms::Padding(2);
 			this->Name = L"DataBaseViewer";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
-			this->Text = L"DataBaseViewer";
+			this->Text = L"RZD Train Manage System";
 			this->TopMost = true;
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
 			this->ResumeLayout(false);
@@ -460,21 +485,14 @@ private: System::Windows::Forms::Button^ btn_reload;
 
 	}
 	private: System::Void textBox_cityFrom_TextChanged(System::Object^ sender, System::EventArgs^ e) {
-		//DataTable^ helpTable = table->Copy();
-		//String^ ChangedText = this->textBox_cityFrom->Text;
-		//for (int i = 0; i < table->Rows->Count; i++)
-		//{
-		//	if ((String^)table->Rows[i]->ItemArray[0] != ChangedText) {
-		//		table->Rows.
-		//	}
-		//}
+
 	}
 	private: System::Void checkBox_Platscart_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void dataGridView1_CellEndEdit(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
 
 		if (e->ColumnIndex == 2) {
-			String^ TryedRow = (String^)table->Rows[e->RowIndex]->ItemArray[e->ColumnIndex];
+			String^ TryedRow = (String^)table->Rows[e->RowIndex]->ItemArray[2];
 			if (TryedRow != "1" && TryedRow != "0") {
 				MessageBox::Show(
 					String::Format("[{0}] isn't a valid status.\nEnter a new valid status (0/1).\n[{0}] явялется неверным форматом ввода статуса.\nНапишите статус првильно (0/1).", TryedRow),
@@ -508,10 +526,105 @@ private: System::Windows::Forms::Button^ btn_reload;
 	private: System::Void textBox_cityDepartTo_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void textBox_dateFrom_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+		if (this->textBox_dateFrom->Text != "") {
+			DateTime dummi;
+			if (!DateTime::TryParse(this->textBox_dateFrom->Text, dummi)) {
+				MessageBox::Show(
+					String::Format("Entered date value [{0}] isn't valid.\nEnter a new valid date.\nВведенная дата [{0}] явялется неверной.\nНапишите дату правильно.", this->textBox_dateFrom->Text),
+					"ERROR COLUMN: DateFrom/DateDepartTo",
+					MessageBoxButtons::OK,
+					MessageBoxIcon::Error
+				);
+			}
+		}
 	}
 	private: System::Void textBox_dateDepart_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+		if (this->textBox_dateDepart->Text != "") {
+			DateTime dummi;
+			if (!DateTime::TryParse(this->textBox_dateDepart->Text, dummi)) {
+				MessageBox::Show(
+					String::Format("Entered date value [{0}] isn't valid.\nEnter a new valid date.\nВведенная дата [{0}] явялется неверной.\nНапишите дату правильно.", this->textBox_dateDepart->Text),
+					"ERROR COLUMN: DateFrom/DateDepartTo",
+					MessageBoxButtons::OK,
+					MessageBoxIcon::Error
+				);
+			}
+		}
 	}
 	private: System::Void textBox_Status_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+		if (this->textBox_Status->Text != "") {
+			if (this->textBox_Status->Text != "1" && this->textBox_Status->Text != "0") {
+				MessageBox::Show(
+					String::Format("[{0}] isn't a valid status.\nEnter a new valid status (0/1).\n[{0}] явялется неверным форматом ввода статуса.\nНапишите статус првильно (0/1).", this->textBox_Status->Text),
+					"ERROR COLUMN: STATUS",
+					MessageBoxButtons::OK,
+					MessageBoxIcon::Error
+				);
+			}
+		}
 	}
-	};
+	private: System::Void btn_search_Click(System::Object^ sender, System::EventArgs^ e) {
+		List<Train^>^ HelpList = gcnew List<Train^>();
+
+		//filling HelpList
+		for each (Train ^ obj in TrainsList)
+		{
+			HelpList->Add(obj);
+		}
+
+		Dictionary<String^, String^>^ textBoxes = gcnew Dictionary<String^, String^>;
+		textBoxes->Add("From", this->textBox_cityFrom->Text);
+		textBoxes->Add("DepartTo", this->textBox_cityDepartTo->Text);
+		textBoxes->Add("Status", this->textBox_Status->Text);
+		textBoxes->Add("DateFrom", this->textBox_dateFrom->Text);
+		textBoxes->Add("DateDepartTo", this->textBox_dateDepart->Text);
+		textBoxes->Add("AvailableSeats", "");
+		textBoxes->Add("SeatsKupe", Convert::ToString(this->checkBox_Kupe->Checked));
+		textBoxes->Add("SeatsSleep", Convert::ToString(this->checkBox_Sleep->Checked));
+		textBoxes->Add("SeatsPlatscart", Convert::ToString(this->checkBox_Platscart->Checked));
+
+		for each (String^ columnName in ColumnsNames)
+		{
+			for (int i = 0; i < HelpList->Count; i++)
+			{
+				if (columnName != "SeatsKupe" && columnName != "SeatsSleep" && columnName != "SeatsPlatscart")
+				{
+					if (textBoxes[columnName] != "") {
+						if (textBoxes[columnName] != HelpList[i]->AllData[columnName]) {
+							HelpList[i]->From = "DeleteRow";
+						}
+					}
+				}
+				else {
+					if (textBoxes[columnName] == "True" && HelpList[i]->AllData[columnName] == "0") {
+						HelpList[i]->From = "DeleteRow";
+					}
+				}
+			}
+		}
+
+		table->Clear();
+
+		for (int i = 0; i < HelpList->Count; i++)
+		{
+			if (HelpList[i]->From != "DeleteRow") {
+				DataRow^ row = table->NewRow();
+				for (int j = 0; j < table->Columns->Count; j++)
+				{
+					String^ columnName = table->Columns[j]->Caption;
+					row[columnName] = HelpList[i]->AllData[columnName];
+				}
+				table->Rows->Add(row);
+			}
+		}
+
+	}
+	private: System::Void checkBox_Sleep_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+	}
+	private: System::Void checkBox_Kupe_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+	}
+	private: System::Void btn_addRow_Click(System::Object^ sender, System::EventArgs^ e) {
+		table->Rows->Add();
+	}
+};
 }
